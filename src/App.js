@@ -3,6 +3,8 @@ import Section from './components/Section';
 import Form from './components/Form';
 import ContactsList from 'components/ContactsList';
 import Filter from 'components/Filter';
+import shortid from 'shortid';
+
 class App extends Component {
   state = {
     contacts: [
@@ -14,22 +16,30 @@ class App extends Component {
     filter: '',
   };
   formSubmithandle = data => {
+    data.id = shortid.generate();
     this.setState(({ contacts }) => {
       return {
         contacts: [...contacts, data],
       };
     });
-    // if (name === '') {
-    //   alert(`please wrigth the name from contacts`);
-    //   return;
-    // }
-    // if (number === '') {
-    //   alert(`please wrigth the name fron number`);
-    // }
+    const duplicateName = this.state.contacts.find(
+      contact => contact.name === data.name,
+    );
+
+    if (duplicateName) {
+      alert(`${data.name} is already on contacts`);
+      return;
+    }
+    if (data.name === '') {
+      alert(`please, write the name from the contacts`);
+      return;
+    }
+    if (data.number === '') {
+      alert(`please, write the name from the number`);
+    }
   };
   visibleContacts = () => {
     const { filter, contacts } = this.state;
-    console.log(contacts);
     const normalizedFilter = filter.toLowerCase();
 
     return contacts.filter(contact =>

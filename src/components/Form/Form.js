@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
 import Button from 'components/Button';
 import Input from 'components/Input';
+import shortid from 'shortid';
 
 export class Form extends Component {
   state = {
     name: '',
     number: '',
   };
+  nameInputId = shortid.generate();
+  numberInputId = shortid.generate();
   handleSubmit = e => {
-    // const { name, number } = this.state;
-    e.preventdefault();
+    e.preventDefault();
     this.props.onSubmit(this.state);
+    console.log(e, this.props);
   };
+
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
-  // handleChange = ({ value, name }) => {
-  //   this.setState({ [name]: value });
-  //   // this.reset();
-  // };
+
   reset = () => {
     this.setState({ name: '', number: '' });
   };
   render() {
-    //  const { name, number } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <Input
@@ -36,6 +36,7 @@ export class Form extends Component {
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           required
           onChange={this.handleChange}
+          id={this.nameInputId}
         />
         <Input
           labelName="Number"
@@ -46,6 +47,7 @@ export class Form extends Component {
           title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
           required
           onChange={this.handleChange}
+          id={this.nameInputId}
         />
         <Button label="Add contact" />
       </form>
