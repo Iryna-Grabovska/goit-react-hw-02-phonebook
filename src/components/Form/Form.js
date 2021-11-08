@@ -15,7 +15,9 @@ export class Form extends Component {
     this.props.onSubmit(this.state);
     console.log(e, this.props);
   };
+  // handleSubmit = e => {
 
+  // }
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -25,6 +27,7 @@ export class Form extends Component {
     this.setState({ name: '', number: '' });
   };
   render() {
+    console.log(this.props);
     return (
       <form onSubmit={this.handleSubmit}>
         <Input
